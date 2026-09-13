@@ -131,6 +131,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/financas/{id}', [FinancasController::class, 'destroy'])->name('financas.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    // ... suas rotas anteriores ...
+
+    // Novas Rotas do Painel de Promoções:
+    Route::post('/dashboard/configuracoes/promocao', [AdminConfigController::class, 'salvarPromocao'])->name('admin.promocao.salvar');
+    Route::delete('/dashboard/configuracoes/promocao/{id}', [AdminConfigController::class, 'deletarPromocao'])->name('admin.promocao.deletar');
+});
+
+
 
 // Importa as rotas nativas de autenticação (Login, Logout, etc.)
 require __DIR__.'/auth.php';
