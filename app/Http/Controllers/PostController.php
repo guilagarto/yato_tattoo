@@ -36,4 +36,13 @@ class PostController extends Controller
 
         return redirect()->back()->with('sucesso', 'Artigo publicado no blog com sucesso!');
     }
+        // Exibe um artigo completo no site público
+    public function show($slug)
+    {
+        // Busca o post pelo slug ou retorna erro 404 se não existir
+        $artigo = Post::where('slug', $slug)->firstOrFail();
+        
+        return view('blog.show', compact('artigo'));
+    }
+
 }

@@ -41,4 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
+// Rota pública para ler um artigo completo usando o slug
+Route::get('/blog/{slug}', [PostController::class, 'show'])->name('publico.blog.show');
+
+
 require __DIR__.'/auth.php';
