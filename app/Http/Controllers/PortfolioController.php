@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class PortfolioController extends Controller
 {
@@ -36,7 +38,7 @@ class PortfolioController extends Controller
         return redirect()->back()->with('sucesso', 'Trabalho adicionado ao portfólio com sucesso!');
     }
 
-    use Illuminate\Support\Facades\Storage;
+   
 
 // Abre a tela de edição de uma foto específica
 public function edit($id)
