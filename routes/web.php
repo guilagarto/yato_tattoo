@@ -10,6 +10,7 @@ use App\Models\Carrossel;
 use App\Models\Promocao;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminConfigController;
+use App\Http\Controllers\FinancasController;
 /*
 |--------------------------------------------------------------------------
 | Rotas Públicas do Site (Acessíveis para qualquer cliente)
@@ -118,6 +119,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/blog/{id}/edit', [PostController::class, 'edit'])->name('blog.edit');
     Route::put('/dashboard/blog/{id}', [PostController::class, 'update'])->name('blog.update');
     Route::delete('/dashboard/blog/{id}', [PostController::class, 'destroy'])->name('blog.destroy');
+});
+
+
+Route::middleware('auth')->group(function () {
+    // ... suas rotas anteriores de portfolio, agenda e blog ...
+
+    // Rotas do Painel Financeiro
+    Route::get('/dashboard/financas', [FinancasController::class, 'index'])->name('financas.index');
+    Route::post('/dashboard/financas', [FinancasController::class, 'store'])->name('financas.store');
+    Route::delete('/dashboard/financas/{id}', [FinancasController::class, 'destroy'])->name('financas.destroy');
 });
 
 
