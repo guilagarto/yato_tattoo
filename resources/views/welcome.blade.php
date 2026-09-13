@@ -201,15 +201,30 @@
 </head>
 <body>
 
-    <div class="nav-links">
-        @if (Route::has('login'))
-            @auth
-                <a href="{{ url('/dashboard') }}">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}">Entrar</a>
-            @endauth
-        @endif
+     <div class="nav-links" style="position: absolute; top: 20px; width: calc(100% - 40px); display: flex; justify-content: space-between; max-width: 1200px; padding: 0 20px; box-sizing: border-box;">
+        <!-- Links de Navegação das Páginas Públicas -->
+        <div class="menu-publico">
+            <a href="{{ url('/') }}" style="color: #d4af37; font-weight: bold; margin-right: 20px; text-decoration: none;">Home</a>
+            <a href="{{ route('publico.agenda') }}" style="color: #fff; margin-right: 20px; text-decoration: none;">Agenda</a>
+            <a href="{{ route('publico.portfolio') }}" style="color: #fff; margin-right: 20px; text-decoration: none;">Portfólio</a>
+            <a href="{{ route('publico.blog') }}" style="color: #fff; text-decoration: none;">Blog</a>
+        </div>
+
+        <!-- Links Restritos / Login -->
+        <div class="menu-auth">
+            @if (Route::has('login'))
+                @auth
+                    <a href="{{ url('/dashboard') }}" style="color: #fff; text-decoration: none; border: 1px solid #d4af37; padding: 5px 15px; border-radius: 4px;">Dashboard</a>
+                @else
+                    <a href="{{ route('login') }}" style="color: #fff; text-decoration: none; margin-right: 15px;">Entrar</a>
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" style="color: #121212; background-color: #d4af37; padding: 5px 15px; text-decoration: none; font-weight: bold; border-radius: 4px;">Cadastrar-se</a>
+                    @endif
+                @endauth
+            @endif
+        </div>
     </div>
+
 
     <!-- Seção de Destaque -->
     <div class="hero">

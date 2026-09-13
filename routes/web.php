@@ -4,16 +4,21 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortfolioController;
 use App\Models\Portfolio;
+use App\Models\Post;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
-    // Busca os trabalhos mais recentes salvos no banco
+    // Pega as últimas 6 fotos do portfólio
     $trabalhos = Portfolio::latest()->take(6)->get(); 
     
-    // Passa esses trabalhos para a página inicial
-    return view('welcome', compact('trabalhos'));
+    // Pega os últimos 3 artigos do blog (o que resolve o erro da variável)
+    $artigos = Post::latest()->take(3)->get(); 
+    
+    // Entrega a view passando as duas variáveis coletadas do banco
+    return view('welcome', compact('trabalhos', 'artigos'));
 });
+
 
 
 Route::get('/dashboard', function () {
@@ -43,6 +48,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Rota pública para ler um artigo completo usando o slug
 Route::get('/blog/{slug}', [PostController::class, 'show'])->name('publico.blog.show');
+
+
+// Rota que recebe os dados do formulário de agendamento do site público
+Route::post('/agendar-visita', [AgendamentoController::class, 'store'])->name('publico.agendar');
+
+// Rota para a Página dedicada de Portfólio Público
+// Rota para a Página dedicada de Portfólio Público
+Route::get('/portfolio', function () {
+    // Substitua ->get() por ->paginate(12)
+    $trabalhos = \App\Models\Portfolio::latest()->paginate(12); 
+    return view('paginas.portfolio', compact('trabalhos'));
+})->name('publico.portfolio');
+
+// Rota para a Página dedicada de Blog Público
+Route::get('/blog', function () {
+    // Substitua ->get() por ->paginate(6)
+    $artigos = \App\Models\Post::latest()->paginate(6); 
+    return view('paginas.blog', compact('artigos'));
+})->name('publico.blog');
+
+
+// Rota para a Página dedicada de Agenda/Reserva Pública
+Route::get('/agenda', function () {
+    return view('paginas.agenda');
+})->name('publico.agenda');
 
 
 require __DIR__.'/auth.php';
