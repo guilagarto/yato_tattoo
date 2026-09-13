@@ -139,6 +139,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/configuracoes/promocao/{id}', [AdminConfigController::class, 'deletarPromocao'])->name('admin.promocao.deletar');
 });
 
+// Rota que processa o envio do formulário de agendamento do cliente na web
+Route::post('/agendar-visita', [AgendamentoController::class, 'storePublico'])->name('publico.agendar');
 
 
 // Importa as rotas nativas de autenticação (Login, Logout, etc.)
