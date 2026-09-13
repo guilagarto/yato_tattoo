@@ -197,6 +197,19 @@
             text-align: center; 
             margin-bottom: 20px; 
         }
+        /* Carrossel Estilizado */
+        .carousel-container { width: 100%; max-width: 1200px; height: 400px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #2a2a2a; margin-top: 40px; }
+        .carousel-slide { width: 100%; height: 100%; display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-item { min-width: 100%; height: 100%; position: relative; }
+        .carousel-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+        .carousel-caption { position: absolute; bottom: 40px; left: 40px; }
+        .carousel-caption h2 { color: #d4af37; font-size: 2rem; margin: 0; text-transform: uppercase; }
+
+        /* Bloco de Promoções */
+        .promo-section { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border: 1px dashed #d4af37; padding: 25px; border-radius: 8px; margin-top: 30px; text-align: center; }
+        .promo-badge { background-color: #d4af37; color: #121212; padding: 5px 15px; font-weight: bold; border-radius: 4px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
+        .cupom-box { background-color: #121212; border: 1px solid #333; padding: 8px 20px; display: inline-block; border-radius: 4px; font-family: monospace; font-size: 1.2rem; color: #d4af37; margin-top: 15px; letter-spacing: 2px; }
+
     </style>
 </head>
 <body>
@@ -211,19 +224,55 @@
         </div>
 
         <!-- Links Restritos / Login -->
+               <!-- Links Restritos / Login Modificado -->
         <div class="menu-auth">
             @if (Route::has('login'))
                 @auth
                     <a href="{{ url('/dashboard') }}" style="color: #fff; text-decoration: none; border: 1px solid #d4af37; padding: 5px 15px; border-radius: 4px;">Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" style="color: #fff; text-decoration: none; margin-right: 15px;">Entrar</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" style="color: #121212; background-color: #d4af37; padding: 5px 15px; text-decoration: none; font-weight: bold; border-radius: 4px;">Cadastrar-se</a>
-                    @endif
+                    <a href="{{ route('login') }}" style="color: #121212; background-color: #d4af37; padding: 5px 15px; text-decoration: none; font-weight: bold; border-radius: 4px;">Entrar</a>
                 @endauth
             @endif
         </div>
+
     </div>
+
+        <!-- Seção do Carrossel Dinâmico -->
+    @if($banners->count() > 0)
+    <div class="carousel-container">
+        <div class="carousel-slide" id="carouselSlide">
+            @foreach($banners as $banner)
+                <div class="carousel-item">
+                    <img src="{{ asset('storage/' . $banner->imagem) }}" alt="Banner Yato Tattoo">
+                    @if($banner->titulo)
+                        <div class="carousel-caption">
+                            <h2>{{ $banner->titulo }}</h2>
+                            @if($banner->link)
+                                <a href="{{ $banner->link }}" class="cta-btn" style="padding: 6px 15px; font-size: 0.85rem; margin-top: 10px; display: inline-block;">Confira</a>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <!-- Seção de Promoções Dinâmicas -->
+    @if($promocoes->count() > 0)
+    <div class="container" style="border: none; padding-bottom: 0;">
+        <div class="promo-section">
+            <span class="promo-badge">🔥 Promoção Ativa</span>
+            @foreach($promocoes as $promo)
+                <h3 style="color: #fff; font-size: 1.8rem; margin: 0 0 10px 0;">{{ $promo->titulo }}</h3>
+                <p style="color: #aaa; margin: 0;">{{ $promo->descricao }}</p>
+                @if($promo->cupom)
+                    <div>Usa o cupom no estúdio: <span class="cupom-box">{{ $promo->cupom }}</span></div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+    @endif
 
 
     <!-- Seção de Destaque -->
@@ -314,6 +363,19 @@
             </form>
         </div>
     </div>
+
+        <script>
+        const slide = document.getElementById('carouselSlide');
+        if (slide) {
+            let index = 0;
+            const items = document.querySelectorAll('.carousel-item');
+            setInterval(() => {
+                index = (index + 1) % items.length;
+                slide.style.transform = `translateX(-${index * 100}%)`;
+            }, 4000); // Gira a cada 4 segundos
+        }
+    </script>
+
 
 </body>
 </html>

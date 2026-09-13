@@ -35,4 +35,54 @@ class PortfolioController extends Controller
 
         return redirect()->back()->with('sucesso', 'Trabalho adicionado ao portfólio com sucesso!');
     }
+
+    use Illuminate\Support\Facades\Storage;
+
+// Abre a tela de edição de uma foto específica
+public function edit($id)
+{
+    $trabalho = Portfolio::findOrFail($id);
+    return view('portfolio.edit', compact('trabalho'));
+}
+
+// Atualiza as informações ou a foto no banco
+public function update(Request $request, $id)
+{
+    $trabalho = Portfolio::findOrFail($id);
+
+    $request->validate([
+        'titulo' => 'required|max:255',
+        'imagem' => 'nullable|image|max:2048',
+    ]);
+
+    $trabalho->titulo = $request->titulo;
+    $trabalho->estilo = $request->estilo;
+    $trabalho->descricao = $request->descricao;
+
+    // Se o usuário enviou uma nova foto, deleta a antiga e salva a nova
+    if ($request->hasFile('imagem')) {
+        Storage::disk('public')->delete($trabalho->imagem);
+        $trabalho->imagem = $request->file('imagem')->store('tattoos', 'public');
+    }
+
+    $trabalho->save();
+
+    return redirect()->route('portfolio.index')->with('sucesso', 'Trabalho atualizado com sucesso!');
+}
+
+// Exclui a foto e o registro do banco de dados definitivamente
+public function destroy($id)
+{
+    $trabalho = Portfolio::findOrFail($id);
+    
+    // Deleta o arquivo de imagem da pasta storage
+    Storage::disk('public')->delete($trabalho->imagem);
+    
+    // Deleta a linha do banco de dados
+    $trabalho->delete();
+
+    return redirect()->back()->with('sucesso', 'Trabalho removido do portfólio!');
+}
+
+
 }

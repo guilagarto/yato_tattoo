@@ -59,10 +59,26 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     @forelse($trabalhos as $trabalho)
                         <div class="border dark:border-gray-700 p-2 rounded-lg bg-gray-50 dark:bg-gray-900">
-                            <img src="{{ asset('storage/' . $trabalho->imagem) }}" class="w-full h-48 object-cover rounded-md mb-2">
-                            <h4 class="font-bold text-gray-800 dark:text-gray-200">{{ $trabalho->titulo }}</h4>
-                            <span class="text-xs text-indigo-500 font-semibold">{{ $trabalho->estilo }}</span>
-                        </div>
+    <img src="{{ asset('storage/' . $trabalho->imagem) }}" class="w-full h-48 object-cover rounded-md mb-2">
+    <h4 class="font-bold text-gray-800 dark:text-gray-200">{{ $trabalho->titulo }}</h4>
+    <span class="text-xs text-indigo-500 font-semibold block mb-3">{{ $trabalho->estilo ?? 'Estilo Livre' }}</span>
+    
+    <!-- BLOCO DE AÇÕES (EDITAR E EXCLUIR) -->
+    <div class="flex justify-between items-center gap-2 mt-2 pt-2 border-t border-gray-700">
+        <a href="{{ route('portfolio.edit', $trabalho->id) }}" class="text-xs bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded transition">
+            Editar
+        </a>
+        
+        <form action="{{ route('portfolio.destroy', $trabalho->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta foto?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-xs bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded transition">
+                            Excluir
+                        </button>
+                    </form>
+                </div>
+            </div>
+
                     @empty
                         <p class="text-gray-500 dark:text-gray-400">Nenhum trabalho adicionado ao portfólio ainda.</p>
                     @endforelse
