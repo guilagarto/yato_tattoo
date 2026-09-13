@@ -9,7 +9,7 @@ use App\Models\Post;
 use App\Models\Carrossel;
 use App\Models\Promocao;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminConfigController;
 /*
 |--------------------------------------------------------------------------
 | Rotas Públicas do Site (Acessíveis para qualquer cliente)
@@ -43,8 +43,14 @@ Route::get('/blog/{slug}', [PostController::class, 'show'])->name('publico.blog.
 
 // Rota dedicada para a Página de Agendamento/Reserva Pública
 Route::get('/agenda', function () {
-    return view('paginas.agenda');
+    // Coleta apenas os horários marcados como disponíveis pelo administrador
+    $horariosLivres = \App\Models\VagaAgenda::where('status', 'disponivel')
+                        ->orderBy('data', 'asc')
+                        ->orderBy('hora', 'asc')
+                        ->get();
+    return view('paginas.agenda', compact('horariosLivres'));
 })->name('publico.agenda');
+
 
 // Rota que processa o envio do formulário de agendamento do cliente
 Route::post('/agendar-visita', [AgendamentoController::class, 'store'])->name('publico.agendar');
@@ -80,6 +86,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/blog', [PostController::class, 'index'])->name('blog.index');
     Route::post('/dashboard/blog', [PostController::class, 'store'])->name('blog.store');
 });
+
+
+Route::middleware('auth')->group(function () {
+    // ... suas rotas anteriores do portfolio e blog ...
+
+    // Novas rotas de Customização e Agenda Controlada
+    Route::get('/dashboard/configuracoes', [AdminConfigController::class, 'index'])->name('admin.configuracoes');
+    Route::post('/dashboard/configuracoes/agenda', [AdminConfigController::class, 'abrirHorario'])->name('admin.agenda.abrir');
+    Route::post('/dashboard/configuracoes/carrossel', [AdminConfigController::class, 'salvarBanner'])->name('admin.carrossel.salvar');
+    Route::delete('/dashboard/configuracoes/carrossel/{id}', [AdminConfigController::class, 'deletarBanner'])->name('admin.carrossel.deletar');
+});
+
+Route::middleware('auth')->group(function () {
+    // ... suas rotas anteriores ...
+    
+    Route::get('/dashboard/agenda', [AgendamentoController::class, 'index'])->name('agenda.index');
+    Route::post('/dashboard/agenda', [AgendamentoController::class, 'store'])->name('agenda.store');
+    
+    // ADICIONE ESTA NOVA ROTA DO STATUS BEM AQUI:
+    Route::patch('/dashboard/agenda/{id}/status', [AgendamentoController::class, 'alterarStatus'])->name('agenda.status');
+});
+
+
 
 // Importa as rotas nativas de autenticação (Login, Logout, etc.)
 require __DIR__.'/auth.php';

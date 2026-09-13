@@ -2,29 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agendamento;
+use App\Models\VagaAgenda;
 use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {
+    // Lista todas as vagas (livres e reservadas) na Dashboard
     public function index()
     {
-        // Pega todos os agendamentos ordenados por data e hora mais próxima
-        $agendamentos = Agendamento::orderBy('data', 'asc')->orderBy('hora', 'asc')->get();
-        return view('agenda.index', compact('agendamentos'));
+        $vagas = VagaAgenda::orderBy('data', 'asc')->orderBy('hora', 'asc')->get();
+        return view('agenda.index', compact('vagas'));
     }
 
+    // O Administrador abrindo um horário disponível para os clientes
     public function store(Request $request)
     {
         $request->validate([
-            'cliente_nome' => 'required|max:255',
-            'cliente_whatsapp' => 'required',
             'data' => 'required|date',
             'hora' => 'required',
         ]);
 
-        Agendamento::create($request->all());
+        VagaAgenda::create([
+            'data' => $request->data,
+            'hora' => $request->hora,
+            'status' => 'disponivel', // Nasce livre para o público
+        ]);
 
-        return redirect()->back()->with('sucesso', 'Horário agendado com sucesso!');
+        return redirect()->back()->with('sucesso', 'Horário de atendimento aberto com sucesso!');
+    }
+
+    // Ação opcional para o ADM confirmar ou cancelar uma pré-reserva
+    public function alterarStatus(Request $request, $id)
+    {
+        $vaga = VagaAgenda::findOrFail($id);
+        $vaga->status = $request->status; // 'confirmado' ou 'recusado' (volta a ficar disponivel)
+        
+        if ($request->status == 'disponivel') {
+            $vaga->cliente_nome = null;
+            $vaga->cliente_whatsapp = null;
+            $vaga->observacoes = null;
+        }
+        
+        $vaga->save();
+        return redirect()->back()->with('sucesso', 'Status do agendamento atualizado!');
     }
 }

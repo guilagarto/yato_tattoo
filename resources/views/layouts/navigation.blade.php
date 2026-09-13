@@ -94,6 +94,10 @@
             <x-responsive-nav-link :href="route('blog.index')" :active="request()->routeIs('blog.index')">
                 {{ __('Blog') }}
             </x-responsive-nav-link>
+            <x-nav-link :href="route('admin.configuracoes')" :active="request()->routeIs('admin.configuracoes')">
+                {{ __('Customizar Site & Agenda') }}
+            </x-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

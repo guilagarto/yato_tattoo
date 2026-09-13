@@ -44,9 +44,17 @@
                     <input type="date" name="data" required>
                 </div>
                 <div class="form-group">
-                    <label>Horário</label>
-                    <input type="time" name="hora" required>
+                    <label>Escolha um Horário Disponível no Estúdio</label>
+                    <select name="vaga_id" style="width: 100%; padding: 12px; background-color: #121212; border: 1px solid #333; color: #fff; border-radius: 4px;" required>
+                        <option value="">-- Selecione uma data disponível --</option>
+                        @foreach($horariosLivres as $vaga)
+                            <option value="{{ $vaga->id }}">
+                                {{ date('d/m/Y', strtotime($vaga->data)) }} às {{ date('H:i', strtotime($vaga->hora)) }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
             </div>
             <div class="form-group">
                 <label>Ideia da Tattoo / Detalhes</label>
