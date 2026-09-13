@@ -6,8 +6,8 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
-            // ADICIONE ESTA LINHA BEM AQUI:
-            buildDirectory: 'build',
+            // AJUSTE PARA ESTA LINHA EXATAMENTE:
+            buildDirectory: 'dist',
         }),
     ],
 });
