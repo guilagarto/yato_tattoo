@@ -108,6 +108,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/dashboard/agenda/{id}/status', [AgendamentoController::class, 'alterarStatus'])->name('agenda.status');
 });
 
+Route::middleware('auth')->group(function () {
+    // ... suas rotas anteriores de portfolio e agenda ...
+
+    Route::get('/dashboard/blog', [PostController::class, 'index'])->name('blog.index');
+    Route::post('/dashboard/blog', [PostController::class, 'store'])->name('blog.store');
+    
+    // ADICIONE ESTAS TRÊS LINHAS EXATAMENTE AQUI:
+    Route::get('/dashboard/blog/{id}/edit', [PostController::class, 'edit'])->name('blog.edit');
+    Route::put('/dashboard/blog/{id}', [PostController::class, 'update'])->name('blog.update');
+    Route::delete('/dashboard/blog/{id}', [PostController::class, 'destroy'])->name('blog.destroy');
+});
 
 
 // Importa as rotas nativas de autenticação (Login, Logout, etc.)
