@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yato Tattoo Studio</title>
+    
+    <!-- LINK DO GOOGLE FONTS 100% CORRETO E FECHADO -->
+        <!-- LINK DO GOOGLE FONTS 100% CORRETO E FECHADO -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=New+Rocker&display=swap" rel="stylesheet">
+
+
     <style>
+
         body { 
             background-color: #121212; 
             color: #ffffff; 
@@ -16,51 +25,232 @@
             align-items: center; 
             min-height: 100vh; 
         }
+
+        /* 👑 CABEÇALHO E MENU FIXO */
+        header {
+            width: 100%;
+            background-color: rgba(18, 18, 18, 0.95);
+            border-bottom: 1px solid #1a1a1a;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .logo-text {
+            color: #b30000; /* Vermelho Sangue */
+            font-weight: bold;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            text-decoration: none;
+                        font-family: 'New Rocker', system-ui;
+
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .logo-text:hover {
+            color: #bc0000; /* Fica dourado ao passar o mouse */
+        }
+
+        .menu-desktop {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .menu-desktop a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .menu-desktop a:hover {
+            color: #bc0000;
+        }
+        .btn-dash {
+            border: 1px solid #bc0000;;
+            padding: 6px 15px;
+            border-radius: 4px;
+        }
+        .btn-entrar {
+            background-color: #bc0000;;
+            color: #121212 !important;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-weight: bold !important;
+        }
+
+        /* 📱 MENU HAMBÚRGUER (CELULAR) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #bc0000;;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .menu-mobile {
+            display: none;
+            width: 100%;
+            background-color: #161616;
+            border-bottom: 1px solid #222;
+            flex-direction: column;
+            padding: 10px 0;
+        }
+        .menu-mobile a {
+            color: #bc0000;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #1f1f1f;
+        }
+        .menu-mobile a:last-child { border: none; }
+        /* 🎯 SEÇÃO DO CARROSSEL & ESPAÇAMENTO TOP */
+        .top-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 90px; /* Joga os blocos para baixo do menu fixo */
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* 📸 CARROSSEL REFORMULADO */
+        .carousel-container { 
+            width: 100%; 
+            height: 400px; 
+            position: relative; 
+            overflow: hidden; 
+            border-radius: 8px; 
+            border: 1px solid #1a1a1a; 
+            margin-bottom: 25px;
+        }
+        .carousel-slide { 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            transition: transform 0.5s ease-in-out; 
+        }
+        .carousel-item { 
+            min-width: 100%; 
+            height: 100%; 
+            position: relative; 
+        }
+        .carousel-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.5); 
+        }
+        .carousel-caption { 
+            position: absolute; 
+            bottom: 40px; 
+            left: 40px; 
+        }
+        .carousel-caption h2 { 
+            color: #bc0000;; 
+            font-size: 2.2rem; 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+
+        /* 🔥 BLOCO DE PROMOÇÕES */
+        .promo-section { 
+            background: linear-gradient(135deg, #161616, #1f1f1f); 
+            border: 1px dashed #bc0000;; 
+            padding: 30px; 
+            border-radius: 8px; 
+            text-align: center; 
+            margin-bottom: 30px;
+        }
+        .promo-badge { 
+            background-color: #bc0000;; 
+            color: #121212; 
+            padding: 5px 15px; 
+            font-weight: bold; 
+            border-radius: 4px; 
+            display: inline-block; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+        .cupom-box { 
+            background-color: #121212; 
+            border: 1px solid #333; 
+            padding: 8px 25px; 
+            display: inline-block; 
+            border-radius: 4px; 
+            font-family: monospace; 
+            font-size: 1.3rem; 
+            color: #bc0000;; 
+            margin-top: 15px; 
+            letter-spacing: 2px; 
+        }
+
+        /* Título Principal Yato Tattoo */
         .hero { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            height: 60vh; 
+            padding: 60px 20px;
             text-align: center; 
+            box-sizing: border-box;
         }
-        h1 { 
-            font-size: 3.5rem; 
-            letter-spacing: 2px; 
-            color: #d4af37; 
-            margin-bottom: 10px; 
+        .h1 { 
+            font-size: 5.5rem; /* Letra Grande e Imponente */
+            letter-spacing: 4px; 
+            color: #bc0000; /* Vermelho Sangue Intenso */
+            margin: 0 0 10px 0; 
+            font-family: 'New Rocker', system-ui;
+
+            
+            /* 💥 EFEITO DE BORDA PRETA REDOR DA LETRA PARA DESTACAR NO FUNDO */
+            text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000;
         }
+
         .hero p { 
-            font-size: 1.2rem; 
+            font-size: 1.25rem; 
             color: #aaaaaa; 
-            margin-bottom: 30px; 
+            margin: 0 0 35px 0; 
         }
         .cta-btn { 
-            background-color: #d4af37; 
+            background-color: #bc0000;; 
             color: #121212; 
             padding: 12px 30px; 
             text-decoration: none; 
             font-weight: bold; 
             border-radius: 5px; 
             transition: 0.3s; 
+            display: inline-block;
         }
         .cta-btn:hover { 
             background-color: #ffffff; 
         }
-        .nav-links { 
-            position: absolute; 
-            top: 20px; 
-            right: 20px; 
-        }
-        .nav-links a { 
-            color: #ffffff; 
-            margin-left: 15px; 
-            text-decoration: none; 
-            font-size: 0.9rem; 
-        }
+        
+        /* Seções de Conteúdo */
         .section-title { 
             text-align: center; 
-            color: #d4af37; 
+            color: #bc0000;; 
             font-size: 2rem; 
             margin-bottom: 40px; 
             text-transform: uppercase; 
@@ -69,9 +259,9 @@
         .container { 
             width: 100%; 
             max-width: 1200px; 
-            padding: 60px 20px; 
+            padding: 80px 20px; 
             box-sizing: border-box; 
-            border-bottom: 1px solid #222; 
+            border-bottom: 1px solid #1a1a1a; 
         }
         
         /* Portfólio */
@@ -81,15 +271,15 @@
             gap: 25px; 
         }
         .card-tattoo { 
-            background-color: #1a1a1a; 
-            border: 1px solid #2a2a2a; 
+            background-color: #161616; 
+            border: 1px solid #222; 
             border-radius: 8px; 
             overflow: hidden; 
             transition: 0.3s; 
         }
         .card-tattoo:hover { 
             transform: translateY(-5px); 
-            border-color: #d4af37; 
+            border-color: #bc0000;; 
         }
         .card-tattoo img { 
             width: 100%; 
@@ -105,7 +295,7 @@
             font-size: 1.2rem; 
         }
         .card-info span { 
-            color: #d4af37; 
+            color: #bc0000;; 
             font-size: 0.85rem; 
             font-weight: bold; 
             text-transform: uppercase; 
@@ -141,151 +331,111 @@
             line-height: 1.5; 
         }
 
-        /* Formulário de Agenda */
-        .agenda-form { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            background-color: #1a1a1a; 
-            padding: 30px; 
-            border-radius: 8px; 
-            border: 1px solid #2a2a2a; 
+        /* 📱 RESPONSIVIDADE (CELULAR) */
+        @media (max-width: 768px) {
+            .menu-desktop { display: none; }
+            .menu-toggle { display: flex; }
+            .menu-mobile.active { display: flex; }
+            h1 { font-size: 2.6rem; }
+            .top-wrapper { margin-top: 80px; padding: 0 10px; }
+            .carousel-container { height: 260px; }
+            .carousel-caption h2 { font-size: 1.4rem; left: 20px; bottom: 20px; }
         }
-        .form-group { 
-            margin-bottom: 20px; 
-        }
-        .form-group label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 0.9rem; 
-            color: #ccc; 
-        }
-        .form-group input, .form-group textarea { 
-            width: 100%; 
-            padding: 12px; 
-            background-color: #121212; 
-            border: 1px solid #333; 
-            color: #fff; 
-            border-radius: 4px; 
-            box-sizing: border-box; 
-        }
-        .form-group input:focus, .form-group textarea:focus { 
-            border-color: #d4af37; 
-            outline: none; 
-        }
-        .submit-btn { 
-            background-color: #d4af37; 
-            color: #121212; 
-            border: none; 
-            width: 100%; 
-            padding: 14px; 
-            font-weight: bold; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            text-transform: uppercase; 
-            font-size: 0.95rem; 
-            transition: 0.3s; 
-        }
-        .submit-btn:hover { 
-            background-color: #fff; 
-        }
-        .alert-success { 
-            background-color: #1b4332; 
-            border: 1px solid #2d6a4f; 
-            color: #d8f3dc; 
-            padding: 15px; 
-            border-radius: 4px; 
-            text-align: center; 
-            margin-bottom: 20px; 
-        }
-        /* Carrossel Estilizado */
-        .carousel-container { width: 100%; max-width: 1200px; height: 400px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #2a2a2a; margin-top: 40px; }
-        .carousel-slide { width: 100%; height: 100%; display: flex; transition: transform 0.5s ease-in-out; }
-        .carousel-item { min-width: 100%; height: 100%; position: relative; }
-        .carousel-item img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
-        .carousel-caption { position: absolute; bottom: 40px; left: 40px; }
-        .carousel-caption h2 { color: #d4af37; font-size: 2rem; margin: 0; text-transform: uppercase; }
-
-        /* Bloco de Promoções */
-        .promo-section { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border: 1px dashed #d4af37; padding: 25px; border-radius: 8px; margin-top: 30px; text-align: center; }
-        .promo-badge { background-color: #d4af37; color: #121212; padding: 5px 15px; font-weight: bold; border-radius: 4px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
-        .cupom-box { background-color: #121212; border: 1px solid #333; padding: 8px 20px; display: inline-block; border-radius: 4px; font-family: monospace; font-size: 1.2rem; color: #d4af37; margin-top: 15px; letter-spacing: 2px; }
-
     </style>
 </head>
 <body>
 
-     <div class="nav-links" style="position: absolute; top: 20px; width: calc(100% - 40px); display: flex; justify-content: space-between; max-width: 1200px; padding: 0 20px; box-sizing: border-box;">
-        <!-- Links de Navegação das Páginas Públicas -->
-        <div class="menu-publico">
-            <a href="{{ url('/') }}" style="color: #d4af37; font-weight: bold; margin-right: 20px; text-decoration: none;">Home</a>
-            <a href="{{ route('publico.agenda') }}" style="color: #fff; margin-right: 20px; text-decoration: none;">Agenda</a>
-            <a href="{{ route('publico.portfolio') }}" style="color: #fff; margin-right: 20px; text-decoration: none;">Portfólio</a>
-            <a href="{{ route('publico.blog') }}" style="color: #fff; text-decoration: none;">Blog</a>
+    <!-- 👑 CABEÇALHO FIXO COM MENU UNIFICADO -->
+    <header>
+        <div class="nav-container">
+            <a href="{{ url('/') }}" class="logo-text">YATO TATTOO</a>
+            
+            <!-- Menu para Computador -->
+            <div class="menu-desktop">
+                <a href="{{ url('/') }}">Home</a>
+                <a href="{{ route('publico.agenda') }}">Agenda</a>
+                <a href="{{ route('publico.portfolio') }}">Portfólio</a>
+                <a href="{{ route('publico.blog') }}">Blog</a>
+                @if (Route::has('login'))
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="btn-dash">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn-entrar">Entrar</a>
+                    @endauth
+                @endif
+            </div>
+
+            <!-- Botão Hambúrguer para Celular -->
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
 
-        <!-- Links Restritos / Login -->
-               <!-- Links Restritos / Login Modificado -->
-        <div class="menu-auth">
+        <!-- Menu Oculto (Gaveta Mobile) -->
+        <div class="menu-mobile" id="menuMobile">
+            <a href="{{ url('/') }}">Home</a>
+            <a href="{{ route('publico.agenda') }}">Agenda</a>
+            <a href="{{ route('publico.portfolio') }}">Portfólio</a>
+            <a href="{{ route('publico.blog') }}">Blog</a>
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" style="color: #fff; text-decoration: none; border: 1px solid #d4af37; padding: 5px 15px; border-radius: 4px;">Dashboard</a>
+                    <a href="{{ url('/dashboard') }}">Dashboard</a>
                 @else
-                    <a href="{{ route('login') }}" style="color: #121212; background-color: #d4af37; padding: 5px 15px; text-decoration: none; font-weight: bold; border-radius: 4px;">Entrar</a>
+                    <a href="{{ route('login') }}">Entrar</a>
                 @endauth
             @endif
         </div>
+    </header>
 
-    </div>
-
-        <!-- Seção do Carrossel Dinâmico -->
-    @if($banners->count() > 0)
-    <div class="carousel-container">
-        <div class="carousel-slide" id="carouselSlide">
-            @foreach($banners as $banner)
-                <div class="carousel-item">
-                    <img src="{{ asset('storage/' . $banner->imagem) }}" alt="Banner Yato Tattoo">
-                    @if($banner->titulo)
-                        <div class="carousel-caption">
-                            <h2>{{ $banner->titulo }}</h2>
-                            @if($banner->link)
-                                <a href="{{ $banner->link }}" class="cta-btn" style="padding: 6px 15px; font-size: 0.85rem; margin-top: 10px; display: inline-block;">Confira</a>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            @endforeach
+    <!-- 🎯 ENVELOPE DE TOPO: CARROSSEL E PROMOÇÕES ACIMA DE TUDO -->
+    <div class="top-wrapper">
+        
+        <!-- Carrossel Dinâmico -->
+        @if(isset($banners) && $banners->count() > 0)
+        <div class="carousel-container">
+            <div class="carousel-slide" id="carouselSlide">
+                @foreach($banners as $banner)
+                    <div class="carousel-item">
+                        <img src="{{ asset('storage/' . $banner->imagem) }}" alt="Banner Yato Tattoo">
+                        @if($banner->titulo)
+                            <div class="carousel-caption">
+                                <h2>{{ $banner->titulo }}</h2>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
         </div>
-    </div>
-    @endif
+        @endif
 
-    <!-- Seção de Promoções Dinâmicas -->
-    @if($promocoes->count() > 0)
-    <div class="container" style="border: none; padding-bottom: 0;">
+        <!-- Promoções Dinâmicas -->
+        @if(isset($promocoes) && $promocoes->count() > 0)
         <div class="promo-section">
             <span class="promo-badge">🔥 Promoção Ativa</span>
             @foreach($promocoes as $promo)
                 <h3 style="color: #fff; font-size: 1.8rem; margin: 0 0 10px 0;">{{ $promo->titulo }}</h3>
-                <p style="color: #aaa; margin: 0;">{{ $promo->descricao }}</p>
+                <p style="color: #aaa; margin: 0 0 10px 0;">{{ $promo->descricao }}</p>
                 @if($promo->cupom)
-                    <div>Usa o cupom no estúdio: <span class="cupom-box">{{ $promo->cupom }}</span></div>
+                    <div>Use o cupom no estúdio: <span class="cupom-box">{{ $promo->cupom }}</span></div>
                 @endif
             @endforeach
         </div>
-    </div>
-    @endif
+        @endif
 
-
-    <!-- Seção de Destaque -->
+    </div> <!-- Fecha o top-wrapper -->
+    <!-- 🎯 SEÇÃO PRINCIPAL (HERO) -->
     <div class="hero">
         <h1>YATO TATTOO</h1>
         <p>Arte na pele esculpida com precisão e exclusividade.</p>
         <div>
-            <a href="#portfolio" class="cta-btn" style="margin-right: 10px;">Portfólio</a>
-            <a href="#agenda" class="cta-btn" style="background-color: transparent; border: 2px solid #d4af37; color: #d4af37;">Marcar Horário</a>
+            <a href="#portfolio" class="cta-btn" style="margin-right: 15px;">Portfólio</a>
+            <a href="{{ route('publico.agenda') }}" class="cta-btn" style="background-color: transparent; border: 2px solid #d4af37; color: #d4af37;">Marcar Horário</a>
         </div>
     </div>
 
-    <!-- Seção do Portfólio Dinâmico -->
+    <!-- 📸 SEÇÃO DO PORTFÓLIO DINÂMICO -->
     <div id="portfolio" class="container">
         <h2 class="section-title">Últimos Trabalhos</h2>
         <div class="grid-portfolio">
@@ -298,13 +448,13 @@
                     </div>
                 </div>
             @empty
-                <p class="empty-msg" style="text-align: center; color: #555; grid-column: 1/-1;">Nenhum trabalho adicionado ao portfólio ainda.</p>
+                <p style="text-align: center; color: #555; grid-column: 1/-1;">Nenhum trabalho adicionado ao portfólio ainda.</p>
             @endforelse
         </div>
     </div>
 
-    <!-- Seção do Blog Dinâmico -->
-    <div id="blog" class="container">
+    <!-- 🗒️ SEÇÃO DO BLOG DINÂMICO -->
+    <div id="blog" class="container" style="border: none;">
         <h2 class="section-title">Dicas e Cuidados</h2>
         <div class="grid-blog">
             @forelse($artigos as $artigo)
@@ -315,8 +465,6 @@
                     <div class="card-post-content">
                         <h3>{{ $artigo->titulo }}</h3>
                         <p>{{ Str::limit($artigo->conteudo, 150) }}</p>
-                        
-                        <!-- Link dinâmico para a leitura completa do artigo -->
                         <a href="{{ route('publico.blog.show', $artigo->slug) }}" style="color: #d4af37; text-decoration: none; font-weight: bold; font-size: 0.9rem; display: inline-block; margin-top: 15px;">Ler Artigo Completo →</a>
                     </div>
                 </div>
@@ -326,56 +474,28 @@
         </div>
     </div>
 
-    <!-- Seção da Agenda Pública -->
-    <div id="agenda" class="container" style="border: none;">
-        <h2 class="section-title">Solicitar Agendamento</h2>
-        
-        @if(session('sucesso'))
-            <div class="alert-success">{{ session('sucesso') }}</div>
-        @endif
+    <!-- 🛠️ SCRIPTS DE INTERAÇÃO -->
+    <script>
+        // Menu de Celular (Três Tracinhos)
+        const menuToggle = document.getElementById('menuToggle');
+        const menuMobile = document.getElementById('menuMobile');
+        menuToggle.addEventListener('click', () => {
+            menuMobile.classList.toggle('active');
+        });
 
-        <div class="agenda-form">
-            <form method="POST" action="{{ route('publico.agendar') }}">
-                @csrf
-                <div class="form-group">
-                    <label>Seu Nome Completo</label>
-                    <input type="text" name="cliente_nome" required>
-                </div>
-                <div class="form-group">
-                    <label>WhatsApp para Contato</label>
-                    <input type="text" name="cliente_whatsapp" placeholder="(00) 00000-0000" required>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="form-group">
-                        <label>Data Pretendida</label>
-                        <input type="date" name="data" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Horário</label>
-                        <input type="time" name="hora" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Ideia da Tattoo / Detalhes</label>
-                    <textarea name="observacoes" rows="3" placeholder="Conte resumidamente o tamanho e o local do corpo..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Enviar Solicitação</button>
-            </form>
-        </div>
-    </div>
-
-        <script>
+        // Carrossel de Imagens Automático
         const slide = document.getElementById('carouselSlide');
         if (slide) {
             let index = 0;
             const items = document.querySelectorAll('.carousel-item');
-            setInterval(() => {
-                index = (index + 1) % items.length;
-                slide.style.transform = `translateX(-${index * 100}%)`;
-            }, 4000); // Gira a cada 4 segundos
+            if(items.length > 1) {
+                setInterval(() => {
+                    index = (index + 1) % items.length;
+                    slide.style.transform = `translateX(-${index * 100}%)`;
+                }, 4000);
+            }
         }
     </script>
-
 
 </body>
 </html>
